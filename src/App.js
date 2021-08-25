@@ -12,12 +12,13 @@ import { ToastContainer } from "react-toastify";
 class App extends Component {
   state = {
     query: "",
-    pictures: [],
     page: 1,
     selectedPicture: null,
-    galleryIsLoading: false,
   };
 
+  handleGalleryUpd = (gallery) => {
+    this.setState({ pictures: gallery });
+  };
   handleOpenModal = (selectedPic) => {
     this.setState({ selectedPicture: selectedPic });
   };
@@ -46,7 +47,7 @@ class App extends Component {
           page={this.state.page}
           getSelectedPic={this.handleOpenModal}
         />
-        <Button onLoadMore={this.handleLoadMore} />
+        {this.state.query && <Button onLoadMore={this.handleLoadMore} />}
         {this.state.selectedPicture && (
           <Modal
             closeModal={this.handleCloseModal}

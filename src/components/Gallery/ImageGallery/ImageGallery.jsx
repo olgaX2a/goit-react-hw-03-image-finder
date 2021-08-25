@@ -3,6 +3,7 @@ import ImageGalleryItem from "../ImageGalleryItem";
 import { Component } from "react";
 import getPictures from "../../../apiService/apiService";
 import { toast } from "react-toastify";
+import Loader from "../../Loader";
 
 const Status = {
   IDLE: "idle",
@@ -48,7 +49,6 @@ class ImageGallery extends Component {
         )
         .catch((error) => this.setState({ error, status: Status.REJECTED }));
     }
-
     return;
   }
 
@@ -60,6 +60,29 @@ class ImageGallery extends Component {
     const { gallery, status, error } = this.state;
     if (status === Status.IDLE) {
       return null;
+    }
+    if (status === Status.PENDING) {
+      return (
+        <>
+          <ul
+            className="ImageGallery"
+            query={this.props.query}
+            page={this.props.page}
+          >
+            {this.state.gallery.map(
+              ({ id, webformatURL, largeImageURL, tags }) => (
+                <ImageGalleryItem
+                  key={id}
+                  src={webformatURL}
+                  alt={tags}
+                  onPictureClick={() => this.handlePictureSelect(largeImageURL)}
+                />
+              )
+            )}
+          </ul>
+          <Loader />
+        </>
+      );
     }
     if (status === Status.REJECTED) {
       return toast.error(error);

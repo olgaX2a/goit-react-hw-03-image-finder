@@ -1,9 +1,9 @@
 import Loader from "react-loader-spinner";
+import "./Loader.css";
 const Spinner = () => {
-  //other logic
-
   return (
     <Loader
+      className="Loading"
       type="Puff"
       color="#00BFFF"
       height={100}
