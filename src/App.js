@@ -31,10 +31,6 @@ class App extends Component {
 
   handleLoadMore = () => {
     this.setState((prevState) => ({ page: prevState.page + 1 }));
-    window.scrollTo({
-      top: document.querySelector("ul").scrollHeight,
-      behavior: "smooth",
-    });
   };
 
   render() {
